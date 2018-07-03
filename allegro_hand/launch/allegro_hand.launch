@@ -39,7 +39,8 @@
   <!-- Visualization with rviz, only if arg VISUALIZE is set to true. Default is
        false, the allegro_viz.launch can be started separated. -->
   <arg name ="VISUALIZE" default="false" />
-  <include file="$(find allegro_hand)/launch/allegro_viz.launch" if="$(arg VISUALIZE)">
+  <include file="$(find allegro_hand)/launch/allegro_viz.launch"
+           if="$(arg VISUALIZE)">
     <arg name="NUM" value="$(arg NUM)"/>
   </include>
 
@@ -69,7 +70,9 @@
 
   <!-- Load the robot description directly from the xacro file. (NOTE: store it
        in two parameter names.) -->
-  <param name="robot_description" command="$(find xacro)/xacro.py $(find allegro_hand_description)/allegro_hand_description_$(arg HAND).xacro"/>
+  <param name="robot_description"
+         command="$(find xacro)/xacro.py
+                  $(find allegro_hand_description)/allegro_hand_description_$(arg HAND).xacro"/>
 
   <!-- Allegro Hand controller and communication node. -->
   <node name="allegroHand_$(arg HAND)_$(arg NUM)"
@@ -110,22 +113,20 @@
     <param name="/hand_info/which_hand" value="$(arg HAND)" /> <!-- See HAND arg above -->
   </node>
 
-  <!-- Joint States (angles) to Joint Transforms -->
-  <!--node name="jointState2tf_$(arg NUM)" pkg="robot_state_publisher" type="state_publisher">
-    <remap from="joint_states" to="allegroHand_$(arg NUM)/joint_states"/>
-  </node-->
-
-
-  <!-- NOTE: The joint_state_publisher is actually commanding *desired* joint angles. You can use the 'sim' controller to have a non-existent hand. -->
-  <!--node name="joint_states_$(arg NUM)" pkg="joint_state_publisher" type="joint_state_publisher" if="$(arg JSP_GUI)">
+  <!-- NOTE: The joint_state_publisher is actually commanding *desired* joint
+       angles. You can use the 'sim' controller to have a non-existent hand. -->
+  <node name="joint_states_$(arg NUM)" pkg="joint_state_publisher" type="joint_state_publisher"
+        if="$(arg JSP_GUI)">
     <remap from="joint_states" to="allegroHand_$(arg NUM)/joint_cmd"/>
     <param name="use_gui" value="true"/>
-  </node-->
+  </node>
 
-  
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-
+  <!-- Joint States (angles) to Joint Transforms -->
+  <node name="jointState2tf_$(arg NUM)"
+        pkg="robot_state_publisher"
+        type="state_publisher">
+    <remap from="joint_states" to="allegroHand_$(arg NUM)/joint_states"/>
+  </node>
 
   <!-- Keyboard handler (if arg KEYBOARD is true) -->
   <node name="keyboard_$(arg NUM)"
