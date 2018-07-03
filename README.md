@@ -116,10 +116,11 @@ a peak-systems pcan to usb adapter.
     sudo apt-get install libpopt-dev ros-indigo-libpcan
 
 2. Download latest drivers: http://www.peak-system.com/fileadmin/media/linux/index.htm#download
+(currently peak-linux-driver-8.5.1)
 
 Install the drivers:
 
-    make clean; make NET=NO_NETDEV_SUPPORT
+    make clean; make NET=NO
     sudo make install
     sudo /sbin/modprobe pcan
 
