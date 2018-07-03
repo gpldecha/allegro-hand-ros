@@ -16,7 +16,6 @@ double home_pose[DOF_JOINTS] =
                 5.0, -5.0, 50.0, 45.0, 60.0, 25.0, 15.0, 45.0
         };
 
-
 std::string initialPosition[DOF_JOINTS] =
         {
                 "~initial_position/j00", "~initial_position/j01",
@@ -67,8 +66,8 @@ void AllegroNodeSim::initController(const std::string &whichHand) {
       desired_joint_state_.position[i] = DEGREES_TO_RADIANS(tmp);
     }
     mutex->unlock();
-  }
-  else {
+  }else {
+
     ROS_WARN("CTRL: Initial position not loaded.");
     ROS_WARN("Check launch file is loading /parameters/initial_position.yaml");
     ROS_WARN("Loading Home position instead...");
